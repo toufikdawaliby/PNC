@@ -117,21 +117,7 @@ export const Navbar = () => {
               </button>
             ))}
 
-            {/* Theme toggle */}
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle dark/light mode"
-              style={{
-                marginLeft: '8px', width: 36, height: 36, borderRadius: '8px',
-                background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
-                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '16px', transition: 'all 0.2s',
-              }}
-              onMouseEnter={e => e.currentTarget.style.background = 'rgba(249,115,22,0.15)'}
-              onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
-            >
-              {isDark ? '☀️' : '🌙'}
-            </button>
+            
           </div>
 
           {/* Mobile Hamburger */}
