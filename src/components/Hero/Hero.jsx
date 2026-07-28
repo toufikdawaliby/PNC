@@ -24,7 +24,7 @@ export const Hero = ({ onOpenChat }) => {
       {/* Background */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 0,
-        backgroundImage:  `url(\${HERO_BG_FALLBACK}) `,
+        backgroundImage:  `url(${HERO_BG_FALLBACK}) `,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
