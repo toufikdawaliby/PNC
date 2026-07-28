@@ -42,7 +42,7 @@ export const Hero = ({ onOpenChat }) => {
 
       {/* Animated orbs */}
       <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+        animate={{ opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         style={{
           position: 'absolute', top: '20%', left: '10%', zIndex: 1,
@@ -52,7 +52,7 @@ export const Hero = ({ onOpenChat }) => {
         }}
       />
       <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2] }}
+        animate={{ opacity: [0.2, 0.4, 0.2] }}
         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
         style={{
           position: 'absolute', bottom: '20%', right: '10%', zIndex: 1,
@@ -205,9 +205,7 @@ export const Hero = ({ onOpenChat }) => {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+      <div
         style={{
           position: 'absolute', bottom: '32px', left: '50%',
           transform: 'translateX(-50%)', zIndex: 10,
@@ -218,7 +216,7 @@ export const Hero = ({ onOpenChat }) => {
       >
         <span style={{ fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>Scroll</span>
         <FiArrowDown size={16} />
-      </motion.div>
+      </div>
     </section>
   )
 }
