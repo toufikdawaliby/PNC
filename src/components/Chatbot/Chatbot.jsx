@@ -75,7 +75,6 @@ export const Chatbot = () => {
   const [initialized, setInitialized] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
-  const webhookURL = import.meta.env.VITE_WEBHOOK_URL;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -107,20 +106,7 @@ export const Chatbot = () => {
     try {
       const history = messages.map(m => ({ role: m.role, content: m.content }))
       const { reply } = await sendMessage(text, history)
-                                      
-                                      const response = await fetch(webhookURL, {
-                                        method: 'POST',
-                                        headers: {
-                                          'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify({ input: input }),
-                                      });
-                                      
-
-                                      if (!response.ok) throw new Error('Failed to call webhook');
-                                      
-                                    const datas = await response.json()
-      setMessages(prev => [...prev, { role: 'ai', content: datas.output }])
+      setMessages(prev => [...prev, { role: 'ai', content: reply }])
     } catch {
       setMessages(prev => [...prev, { role: 'ai', content: "I'm having trouble connecting right now. Please try again or call us at +961 71 111 111." }])
     } finally {
