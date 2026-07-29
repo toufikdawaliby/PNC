@@ -1,6 +1,3 @@
-// ─── Google Apps Script Configuration ─────────────────────────────────────────
-const GAS_URL = import.meta.env.VITE_GAS_URL
-
 // ─── Reservation Types ────────────────────────────────────────────────────────
 export const RESERVATION_TYPES = [
   { value: 'paddle',  label: 'Paddle Court' },
@@ -29,7 +26,7 @@ export const DURATION_OPTIONS = {
 }
 
 /**
- * Create a new reservation via Google Apps Script.
+ * Create a new reservation via Vercel serverless function.
  *
  * @param {Object} reservationData
  * @param {string} reservationData.name
@@ -43,31 +40,24 @@ export const DURATION_OPTIONS = {
  * @returns {Promise<{success: boolean, reservationId: string, message: string}>}
  */
 export const createReservation = async (reservationData) => {
-  if (!GAS_URL) {
-    throw new Error('Reservation service not configured.')
-  }
-
   try {
-    const response = await fetch(GAS_URL, {
+    const response = await fetch('/api/reservation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         ...reservationData,
-        source: 'pnc-website',
         submittedAt: new Date().toISOString(),
       }),
-      mode: 'no-cors',
     })
 
-    // no-cors returns an opaque response — we can't read the body,
-    // but if fetch didn't throw, the request reached Google Apps Script.
-    return {
-      success: true,
-      reservationId: `PNC-${Date.now()}`,
-      message: "Reservation submitted! We'll confirm via WhatsApp within 30 minutes.",
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ error: 'Something went wrong' }))
+      throw new Error(error.error || 'Unable to submit reservation. Please try again.')
     }
+
+    return response.json()
   } catch (error) {
     console.error('[ReservationService] Error creating reservation:', error)
-    throw new Error('Unable to submit reservation. Please call us directly.')
+    throw new Error(error.message || 'Unable to submit reservation. Please call us directly.')
   }
 }

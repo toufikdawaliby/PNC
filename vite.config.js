@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: '/PNC/',
+  // base: '/PNC/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
