@@ -3,7 +3,7 @@ export const paddlePlans = [
   {
     id: 'paddle-1h',
     duration: '1 Hour',
-    price: 20,
+    price: 36,
     per: 'session',
     popular: false,
     features: ['Professional court', 'Paddle equipment included', 'Refreshment discount 10%', 'Locker access'],
@@ -11,19 +11,10 @@ export const paddlePlans = [
   {
     id: 'paddle-2h',
     duration: '2 Hours',
-    price: 35,
+    price: 60,
     per: 'session',
     popular: true,
     features: ['Professional court', 'Paddle equipment included', 'Refreshment discount 15%', 'Locker access', 'Ball machine (30 min)'],
-  },
-  {
-    id: 'paddle-member',
-    duration: 'Member Package',
-    price: 120,
-    per: 'month',
-    popular: false,
-    features: ['Unlimited bookings*', '15% off all food & drinks', 'Priority reservations', 'Guest passes (2/month)', 'Dedicated locker'],
-    note: '*Subject to availability, max 2h/day',
   },
 ]
 
@@ -32,7 +23,6 @@ export const paddleInfo = {
   availableCourts: 1,
   operatingHours: '8:00 AM – 11:00 PM',
   location: 'Ground Floor',
-  memberDiscount: 15,
   features: [
     'Glass-walled professional courts',
     'LED sports lighting',
@@ -47,7 +37,7 @@ export const networkPlans = [
   {
     id: 'net-1h',
     duration: '1 Hour',
-    price: 3,
+    price: 2,
     per: 'hour',
     popular: false,
     color: 'coffee',
@@ -56,7 +46,7 @@ export const networkPlans = [
   {
     id: 'net-3h',
     duration: '3 Hours',
-    price: 8,
+    price: 5,
     per: 'session',
     popular: false,
     color: 'coffee',
@@ -65,7 +55,7 @@ export const networkPlans = [
   {
     id: 'net-5h',
     duration: '5 Hours',
-    price: 12,
+    price: 7,
     per: 'session',
     popular: true,
     color: 'accent',
@@ -74,7 +64,7 @@ export const networkPlans = [
   {
     id: 'net-night',
     duration: 'Night Package',
-    price: 15,
+    price: 10,
     per: 'package',
     popular: false,
     color: 'coffee',

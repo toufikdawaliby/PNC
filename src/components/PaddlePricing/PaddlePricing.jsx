@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FiCheck, FiClock, FiGrid, FiZap } from 'react-icons/fi'
+import { FiCheck, FiClock, FiGrid } from 'react-icons/fi'
 import { paddlePlans, paddleInfo } from '../../data/pricingData'
 import { STAGGER_CONTAINER, CARD_VARIANT } from '../../constants'
 
@@ -44,7 +44,6 @@ export const PaddlePricing = () => (
       >
         {[
           { icon: <FiGrid size={18}/>, label: 'Total Courts', value: `${paddleInfo.totalCourts} Courts` },
-          { icon: <FiZap size={18}/>, label: 'Available Now', value: `${paddleInfo.availableCourts} Available`, accent: true },
           { icon: <FiClock size={18}/>, label: 'Operating Hours', value: paddleInfo.operatingHours },
         ].map(stat => (
           <div

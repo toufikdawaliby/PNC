@@ -68,24 +68,6 @@ export const Hero = ({ onOpenChat }) => {
         textAlign: 'center', padding: '0 24px',
         maxWidth: '900px', margin: '0 auto',
       }}>
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-            background: 'rgba(249,115,22,0.12)',
-            border: '1px solid rgba(249,115,22,0.3)',
-            borderRadius: '999px', padding: '6px 16px',
-            marginBottom: '24px',
-            fontSize: '0.8rem', fontWeight: 600, color: '#fb923c',
-            letterSpacing: '0.08em', textTransform: 'uppercase',
-          }}
-        >
-          <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#4ade80', display: 'inline-block' }} />
-          Now Open — Beirut, Lebanon
-        </motion.div>
 
         {/* Main Heading */}
         <motion.h1

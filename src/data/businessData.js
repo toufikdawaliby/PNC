@@ -5,7 +5,7 @@ export const businessInfo = {
   tagline: 'Great Coffee • Paddle Courts • Gaming Network',
   description: 'Where premium coffee meets competitive sports and cutting-edge gaming. PNC is your ultimate destination for relaxation, play, and connection.',
   email: 'info@pnc.com',
-  address: 'Beirut, Lebanon',
+  address: 'Zahle Lebanon',
   phones: [
     { label: 'Network Questions',  number: '+961 71 111 111', type: 'network' },
     { label: 'General Questions',  number: '+961 71 222 222', type: 'general' },
