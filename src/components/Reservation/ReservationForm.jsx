@@ -27,7 +27,7 @@ const inputStyle = {
 
 export const ReservationForm = ({ toast }) => {
   const [form, setForm] = useState({
-    name: '', phone: '', type: '', date: '', time: '', duration: '', notes: '',
+    name: '', phone: '', type: '', date: '', time: '', duration: '', notes: '', honeypot: '',
   })
   const [errors, setErrors] = useState({})
   const [submitting, setSubmitting] = useState(false)
@@ -85,9 +85,6 @@ export const ReservationForm = ({ toast }) => {
         <p style={{ color: 'rgba(232,213,181,0.7)', marginBottom: '24px' }}>
           We'll confirm your booking via WhatsApp within 30 minutes.
         </p>
-        <button className="btn-primary" onClick={() => { setSubmitted(false); setForm({ name:'',phone:'',type:'',date:'',time:'',duration:'',notes:'' }) }}>
-          Make Another Reservation
-        </button>
       </motion.div>
     )
   }
@@ -158,7 +155,19 @@ export const ReservationForm = ({ toast }) => {
         </Field>
 
         <div style={{ gridColumn: '1 / -1' }}>
-          <Field label="Special Notes (optional)" icon={<FiMessageSquare size={13}/>}>
+        <div style={{ position: 'absolute', opacity: 0, height: 0, width: 0, overflow: 'hidden' }} aria-hidden="true">
+          <label htmlFor="honeypot">Company</label>
+          <input
+            id="honeypot"
+            name="website"
+            type="text"
+            value={form.honeypot}
+            onChange={e => set('honeypot', e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+        <Field label="Special Notes (optional)" icon={<FiMessageSquare size={13}/>}>
             <textarea value={form.notes} onChange={e => set('notes', e.target.value)}
               placeholder="Any special requests or notes…"
               rows={3}

@@ -1,14 +1,5 @@
-import axios from 'axios'
-
-// ─── API Configuration ────────────────────────────────────────────────────────
-// Replace BASE_URL with your Node.js/Express or n8n REST API endpoint
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://your-api-url.com/api'
-
-const apiClient = axios.create({
-  baseURL: BASE_URL,
-  timeout: 15000,
-  headers: { 'Content-Type': 'application/json' },
-})
+// ─── Google Apps Script Configuration ─────────────────────────────────────────
+const GAS_URL = import.meta.env.VITE_GAS_URL
 
 // ─── Reservation Types ────────────────────────────────────────────────────────
 export const RESERVATION_TYPES = [
@@ -38,7 +29,7 @@ export const DURATION_OPTIONS = {
 }
 
 /**
- * Create a new reservation.
+ * Create a new reservation via Google Apps Script.
  *
  * @param {Object} reservationData
  * @param {string} reservationData.name
@@ -48,77 +39,35 @@ export const DURATION_OPTIONS = {
  * @param {string} reservationData.time        - e.g. '14:00'
  * @param {string} reservationData.duration    - e.g. '2h'
  * @param {string} reservationData.notes       - optional special notes
+ * @param {string} reservationData.honeypot    - hidden anti-spam field
  * @returns {Promise<{success: boolean, reservationId: string, message: string}>}
  */
 export const createReservation = async (reservationData) => {
-  // ── MOCK — remove when backend is ready ─────────────────────────────────
-  if (!import.meta.env.VITE_API_URL) {
-    await new Promise(resolve => setTimeout(resolve, 1000))
+  if (!GAS_URL) {
+    throw new Error('Reservation service not configured.')
+  }
+
+  try {
+    const response = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...reservationData,
+        source: 'pnc-website',
+        submittedAt: new Date().toISOString(),
+      }),
+      mode: 'no-cors',
+    })
+
+    // no-cors returns an opaque response — we can't read the body,
+    // but if fetch didn't throw, the request reached Google Apps Script.
     return {
       success: true,
       reservationId: `PNC-${Date.now()}`,
-      message: 'Reservation submitted! We\'ll confirm via WhatsApp within 30 minutes.',
+      message: "Reservation submitted! We'll confirm via WhatsApp within 30 minutes.",
     }
-  }
-  // ── END MOCK ─────────────────────────────────────────────────────────────
-
-  try {
-    const response = await apiClient.post('/reservations', {
-      ...reservationData,
-      source: 'pnc-website',
-      createdAt: new Date().toISOString(),
-    })
-    return response.data
   } catch (error) {
     console.error('[ReservationService] Error creating reservation:', error)
     throw new Error('Unable to submit reservation. Please call us directly.')
-  }
-}
-
-/**
- * Get available time slots for a specific date and reservation type.
- *
- * @param {string} date - ISO date string
- * @param {string} type - 'paddle' | 'gaming'
- * @returns {Promise<string[]>} - Array of available time strings e.g. ['09:00', '10:00']
- */
-export const getAvailableSlots = async (date, type) => {
-  // ── MOCK ─────────────────────────────────────────────────────────────────
-  if (!import.meta.env.VITE_API_URL) {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    return ['09:00', '10:00', '11:00', '13:00', '14:00', '16:00', '17:00', '19:00', '20:00']
-  }
-  // ── END MOCK ─────────────────────────────────────────────────────────────
-
-  try {
-    const response = await apiClient.get('/reservations/slots', {
-      params: { date, type },
-    })
-    return response.data.slots
-  } catch (error) {
-    console.error('[ReservationService] Error fetching slots:', error)
-    return []
-  }
-}
-
-/**
- * Get all reservations for a phone number.
- *
- * @param {string} phone
- * @returns {Promise<Array>}
- */
-export const getReservationsByPhone = async (phone) => {
-  // ── MOCK ─────────────────────────────────────────────────────────────────
-  if (!import.meta.env.VITE_API_URL) {
-    return []
-  }
-  // ── END MOCK ─────────────────────────────────────────────────────────────
-
-  try {
-    const response = await apiClient.get('/reservations', { params: { phone } })
-    return response.data
-  } catch (error) {
-    console.error('[ReservationService] Error fetching reservations:', error)
-    return []
   }
 }
